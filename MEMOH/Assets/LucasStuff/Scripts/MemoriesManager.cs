@@ -78,8 +78,8 @@ public class MemoriesManager : MonoBehaviour
             image.enabled = true;
         }
 
-        player.GetComponent<PlayerMapMov>().whereToGo = neurone.transform;
-        player.GetComponent<PlayerMapMov>().hasToMove = true;
+        player.whereToGo = neurone.transform;
+        player.hasToMove = true;
         memoryWithPlayer = neurone;
     }
 
