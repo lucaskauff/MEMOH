@@ -12,6 +12,7 @@ public class HUDManager : MonoBehaviour
 
     private void Start()
     {
+        DontDestroyOnLoad(gameObject);
         ShowHUD();
     }
 
@@ -36,6 +37,7 @@ public class HUDManager : MonoBehaviour
         mindMap.position = mindMap.position - player.transform.position;
 
         memoMan.hudOpened = true;
+
         hUD.SetActive(true);
 
         open = true;
@@ -44,6 +46,7 @@ public class HUDManager : MonoBehaviour
     public void HideHUD()
     {
         hUD.SetActive(false);
+
         open = false;
     }
 }

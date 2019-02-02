@@ -57,7 +57,7 @@ public class MainMenuManager : MonoBehaviour
         {
             if (displayedText.name == "Play")
             {
-                SceneManager.LoadScene("Room0");
+                FindObjectOfType<LoadNewScene>().LoadNewLevel("Room0");
             }
 
             EndMemory();

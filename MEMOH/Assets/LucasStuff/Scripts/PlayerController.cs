@@ -7,6 +7,21 @@ public class PlayerController : PhysicsObject
     public float maxSpeed = 7;
     public float jumpTakeOffSpeed = 7;
 
+    private static bool playerExists;
+
+    private void Start()
+    {
+        if (!playerExists)
+        {
+            playerExists = true;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
     protected override void ComputeVelocity()
     {
         Vector2 move = Vector2.zero;

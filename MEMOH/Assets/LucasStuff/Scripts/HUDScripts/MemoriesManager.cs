@@ -16,14 +16,19 @@ public class MemoriesManager : MonoBehaviour
     public PlayerMapMov player;
     public GameObject eLetter;
 
-    public GameObject selectedMemory;
     public GameObject memoryWithPlayer;
+
+    bool startOfTheGame = true;
 
     public bool hudOpened = false;
 
     private void Start()
     {
-        memories[0].GetComponent<MemoryTrigger>().memory.discovered = true;
+        if (startOfTheGame)
+        {
+            memories[0].GetComponent<MemoryTrigger>().memory.discovered = true;
+            startOfTheGame = false;
+        }
 
         sentences = new Queue<string>();
 
@@ -51,15 +56,13 @@ public class MemoriesManager : MonoBehaviour
 
         if (hudOpened)
         {
-            selectedMemory = memoryWithPlayer;
-
             if (player.GetComponent<PlayerMapMov>().hasToMove)
             {
                 return;
             }
             else
             {
-                StartMemory(selectedMemory.GetComponent<MemoryTrigger>().memory);
+                StartMemory(memoryWithPlayer.GetComponent<MemoryTrigger>().memory);
                 hudOpened = false;
             }
         }
@@ -85,14 +88,14 @@ public class MemoriesManager : MonoBehaviour
 
     public void StartMemory(Memory memory)
     {
-        memoryText.SetActive(true);
-
         sentences.Clear();
 
         foreach (string sentence in memory.sentences)
         {
             sentences.Enqueue(sentence);
         }
+
+        memoryText.SetActive(true);
 
         DisplayMemory();
     }
@@ -108,8 +111,6 @@ public class MemoriesManager : MonoBehaviour
         }
 
         string sentence = sentences.Dequeue();
-
-        //memoryText.GetComponent<TextMeshProUGUI>().text = selectedMemory.GetComponent<MemoryTrigger>().memory.sentence;
 
         StopAllCoroutines();
         StartCoroutine(TypeMemory(sentence));

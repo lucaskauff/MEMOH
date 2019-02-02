@@ -4,24 +4,27 @@ using UnityEngine;
 
 public class ObjectivePlatform : MonoBehaviour
 {
-    public HitPlatform hitPlat;
-    public MemoriesManager memoMan;
+    public HitPlatform selfHit;
+    public GameObject[] iconPlatforms;
+    public string nextLevelName;
     public GameObject roomMemory;
     public HUDManager hudMan;
-    bool check = false;
 
     private void Update()
     {
-        if (hitPlat.hitted && !check)
+        foreach (GameObject platform in iconPlatforms)
         {
-            EndOfRoom();
+            if (platform.GetComponent<HitPlatform>().hitted && selfHit.hitted)
+            {
+                EndOfRoom();
+            }
         }
     }
 
     void EndOfRoom()
     {
+        FindObjectOfType<LoadNewScene>().LoadNewLevel(nextLevelName);
         roomMemory.GetComponent<MemoryTrigger>().memory.discovered = true;
-        hudMan.SendMessage("ShowHUD");
-        check = true;
+        hudMan.ShowHUD();
     }
 }
